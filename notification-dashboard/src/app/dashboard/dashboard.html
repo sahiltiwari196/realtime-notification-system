@@ -1,0 +1,69 @@
+<div class="dashboard">
+  <div class="header">
+    <h1>🔔 Realtime Notification System</h1>
+    <div class="sse-status" [class.connected]="sseStatus === 'Connected'">
+      SSE: {{ sseStatus }}
+    </div>
+    <div class="unread-badge" *ngIf="unreadCount > 0">{{ unreadCount }} unread</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- CREATE NOTIFICATION -->
+    <div class="card">
+      <h2>Create Notification</h2>
+      <input [(ngModel)]="message" placeholder="Message" />
+      <input [(ngModel)]="idempotencyKey" placeholder="Idempotency Key (optional)" />
+      <button (click)="createNotification()">Send</button>
+      <pre *ngIf="lastResponse" class="response">{{ lastResponse }}</pre>
+    </div>
+
+    <!-- DEMO BUTTONS -->
+    <div class="card">
+      <h2>Feature Demos</h2>
+      <button class="danger" (click)="spamRequests()">
+        🚦 Trigger Rate Limit (spam 12 requests)
+      </button>
+      <button class="warning" (click)="sendDuplicate()">
+        🔁 Test Duplicate Prevention
+      </button>
+      <button class="secondary" (click)="disconnectSSE()">
+        📡 Disconnect SSE
+      </button>
+      <button (click)="reconnectSSE()">
+        🔄 Reconnect SSE (retry on reconnect)
+      </button>
+      <button class="secondary" (click)="loadUnreadCount()">
+        📊 Refresh Unread Count (Redis)
+      </button>
+    </div>
+
+    <!-- LIVE LOG -->
+    <div class="card log-card">
+      <h2>Live Event Log</h2>
+      <div class="log">
+        <div *ngFor="let l of logs" class="log-entry">{{ l }}</div>
+        <div *ngIf="logs.length === 0" class="empty">No events yet.</div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS LIST -->
+    <div class="card notif-card">
+      <h2>Notifications (click to mark read)</h2>
+      <div class="notification-list">
+        <div
+          *ngFor="let n of notifications"
+          class="notification-item"
+          [class.unread]="!n.read"
+          (click)="markAsRead(n)">
+          <p class="msg">{{ n.message }}</p>
+          <small>{{ n.createdAt | date:'short' }} · id={{ n.id }}</small>
+          <span class="tag" *ngIf="!n.read">NEW</span>
+          <span class="tag read" *ngIf="n.read">READ</span>
+        </div>
+        <p *ngIf="notifications.length === 0" class="empty">No notifications yet.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

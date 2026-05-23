@@ -1,0 +1,28 @@
+* { box-sizing: border-box; }
+.dashboard { max-width: 1100px; margin: 30px auto; padding: 0 16px; font-family: sans-serif; }
+.header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+h1 { margin: 0; font-size: 22px; }
+.sse-status { padding: 6px 14px; border-radius: 20px; background: #f44336; color: white; font-size: 13px; font-weight: bold; }
+.sse-status.connected { background: #4caf50; }
+.unread-badge { background: #f44336; color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.card { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px; }
+.log-card, .notif-card { grid-column: span 1; }
+h2 { margin: 0 0 16px; font-size: 16px; color: #333; }
+input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+button { width: 100%; padding: 10px; margin-bottom: 8px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+button:hover { opacity: 0.9; }
+button.danger { background: #f44336; }
+button.warning { background: #ff9800; }
+button.secondary { background: #666; }
+.response { background: #f4f4f4; padding: 10px; border-radius: 6px; font-size: 12px; overflow-x: auto; margin-top: 8px; }
+.log { max-height: 300px; overflow-y: auto; }
+.log-entry { font-size: 13px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; color: #333; font-family: monospace; }
+.notification-list { max-height: 400px; overflow-y: auto; }
+.notification-item { border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; position: relative; }
+.notification-item.unread { border-left: 4px solid #007bff; background: #f0f7ff; }
+.msg { margin: 0 0 4px; font-size: 14px; }
+.tag { position: absolute; top: 10px; right: 10px; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: #007bff; color: white; }
+.tag.read { background: #4caf50; }
+.empty { color: #999; font-size: 14px; }
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
