@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-notif
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin	
+      POSTGRES_DB: notifdb
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: redis-notif
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: notification-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/notifdb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - redis
